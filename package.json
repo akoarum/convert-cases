@@ -1,15 +1,15 @@
 {
-  "name": "convert-words",
+  "name": "convert-cases",
   "version": "1.0.0",
   "description": "A minimal utility function library that converts camelCase to snake_case and snake_case to camelCase.",
-  "main": "dist/cjs/convert-words.js",
-  "module": "dist/esm/convert-words.js",
-  "unpkg": "dist/umd/convert-words.js",
+  "main": "dist/cjs/convert-cases.js",
+  "module": "dist/esm/convert-cases.js",
+  "unpkg": "dist/umd/convert-cases.js",
   "types": "dist/cjs/index.d.ts",
   "files": ["dist"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akoarum/convert-words.git"
+    "url": "git+https://github.com/akoarum/convert-cases.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -18,9 +18,9 @@
   "author": "akoarum",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/akoarum/convert-words/issues"
+    "url": "https://github.com/akoarum/convert-cases/issues"
   },
-  "homepage": "https://github.com/akoarum/convert-words#readme",
+  "homepage": "https://github.com/akoarum/convert-cases#readme",
   "scripts": {
     "build": "rollup -c",
     "prepare": "husky install",
