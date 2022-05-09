@@ -1,0 +1,25 @@
+name: Spec Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  spec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.event_name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-${{ github.event_name }}-
+      - run: npm i
+      - run: npm run test

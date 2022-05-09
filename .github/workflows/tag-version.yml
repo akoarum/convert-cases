@@ -1,0 +1,41 @@
+name: add version tag
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    name: add tag
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[SKIP]') }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.event_name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-${{ github.event_name }}-
+      - run: npm i
+      - run: ./scripts/version.js PATCH
+      - if: "startsWith(github.event.head_commit.message, '[MINOR]')"
+        run: ./scripts/version.js MINOR
+      - if: "startsWith(github.event.head_commit.message, '[MAJOR]')"
+        run: ./scripts/version.js MAJOR
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=`node -pe "require('./package.json').version"`
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "github-actions+${GITHUB_ACTOR}@users.noreply.github.com"
+          git add .
+          git commit -m "update version: ${VERSION}"
+          git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git main
+          git tag v$VERSION
+          git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git v$VERSION
