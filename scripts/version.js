@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { program } = require('comamnder')
+const { program } = require('commander')
 const { workspace, updateWorkspace } = require('./utils')
 
 const main = async () => {
