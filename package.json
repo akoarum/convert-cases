@@ -1,12 +1,13 @@
 {
   "name": "convert-cases",
-  "version": "0.9.0",
   "description": "A minimal utility function library that converts camelCase to snake_case and snake_case to camelCase.",
   "main": "dist/cjs/convert-cases.js",
   "module": "dist/esm/convert-cases.js",
   "unpkg": "dist/umd/convert-cases.js",
   "types": "dist/cjs/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/akoarum/convert-cases.git"
@@ -14,7 +15,12 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "keywords": ["utility", "camelCase", "snake_case", "deeply"],
+  "keywords": [
+    "utility",
+    "camelCase",
+    "snake_case",
+    "deeply"
+  ],
   "author": "akoarum",
   "license": "Apache-2.0",
   "bugs": {
