@@ -5,6 +5,10 @@ describe('camelToSnake', () => {
     expect(camelToSnake('camelCase')).toBe('camel_case')
   })
 
+  it('If first letter is underscore, it should be left as it is', () => {
+    expect(camelToSnake('_camelCase')).toBe('_camel_case')
+  })
+
   it('returned as is except for camelCase', () => {
     expect(camelToSnake('snake_case')).toBe('snake_case')
     expect(camelToSnake('text')).toBe('text')
