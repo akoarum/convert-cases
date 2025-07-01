@@ -1,13 +1,18 @@
 import { camelToSnake } from './camel-to-snake'
+import type { CamelToSnake } from './camel-to-snake'
 
-export const deeplySnakize = <T, U>(obj: T): T | U | T[] | U[] => {
-  if (!obj || typeof obj !== 'object') return obj
-  if (obj instanceof Date || obj instanceof RegExp) return obj
+export type DeepSnakies<T> = T extends (infer U)[]
+  ? DeepSnakies<U>[]
+  : T extends object
+  ? { [K in keyof T as CamelToSnake<K & string>]: DeepSnakies<T[K]> }
+  : T
+
+export const deeplySnakize = <T, U = DeepSnakies<T>>(obj: T): U => {
+  if (!obj || typeof obj !== 'object') return obj as unknown as U
+  if (obj instanceof Date || obj instanceof RegExp) return obj as unknown as U
 
   if (Array.isArray(obj)) {
-    const array: U[] = []
-    obj.forEach((value) => array.push(deeplySnakize(value)))
-    return array
+    return obj.map((item) => deeplySnakize(item)) as unknown as U
   }
 
   const returns: { [key: string]: unknown } = {}
