@@ -14,10 +14,10 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
-      - uses: actions/cache@v1
+          node-version: '20.x'
+      - uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ github.event_name }}-${{ hashFiles('**/package-lock.json') }}
