@@ -3,28 +3,29 @@ name: publish
 on:
   release:
     types: [released]
-  
+  workflow_dispatch:
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: main
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
       - uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ github.event_name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-${{ github.event_name }}-
-      - run: npm i
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1
+      - run: npm install -g npm@latest
+      - run: npm ci
       - run: npm run build
       - run: npm publish --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
